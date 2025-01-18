@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Intercom from '@intercom/messenger-js-sdk';
 
 const Dashboard = () => {
     const [userInfo, setUserInfo] = useState(null);
-    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const inquiries = [
@@ -16,6 +16,16 @@ const Dashboard = () => {
         const data = localStorage.getItem('user-info');
         const userData = JSON.parse(data);
         setUserInfo(userData);
+
+        if (userData) {
+            Intercom({
+                app_id: 'ysd5wj1r',
+                user_id: userData.id, 
+                name: userData.name, 
+                email: userData.email, 
+                created_at: Math.floor(new Date(userData.createdAt).getTime() / 1000), 
+            });
+        }
     }, []);
 
     const handleLogout = () => {
@@ -27,15 +37,9 @@ const Dashboard = () => {
         navigate(`/service-request/${category}`);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Sending message:', message);
-        setMessage('');
-    };
-
     return (
         <div className="min-h-screen bg-gray-900 text-white">
-            {/* Header Section with better spacing */}
+            {/* Header Section */}
             <div className="container mx-auto px-4 py-6">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between mb-8">
@@ -58,7 +62,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    {/* Support Request Section with consistent spacing */}
+                    {/* Support Request Section */}
                     <div className="mb-12">
                         <h2 className="text-2xl font-semibold mb-6">Request Support</h2>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -79,7 +83,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    {/* Main Content Grid with improved layout */}
+                    {/* Main Content Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                         {/* Customer Inquiries */}
                         <div className="lg:col-span-2">
@@ -105,37 +109,13 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* Chat Section */}
+                        {/* Chat Section Replaced with Intercom */}
                         <div className="lg:col-span-3">
-                            <h2 className="text-2xl font-semibold mb-6">Chat with John Doe</h2>
-                            <div className="bg-gray-800 rounded-lg p-6 h-[600px] flex flex-col">
-                                <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-                                    <div className="flex justify-end">
-                                        <div className="bg-blue-600 rounded-lg p-3 max-w-md">
-                                            <p>Hello! How can I help you today?</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-start">
-                                        <div className="bg-gray-700 rounded-lg p-3 max-w-md">
-                                            <p>I need help with my recent order. It hasn't arrived yet.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <form onSubmit={handleSubmit} className="flex gap-4">
-                                    <input
-                                        type="text"
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                        placeholder="Type your message..."
-                                        className="flex-1 bg-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="bg-blue-600 px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                                    >
-                                        Send
-                                    </button>
-                                </form>
+                            <h2 className="text-2xl font-semibold mb-6">Chat Support</h2>
+                            <div className="bg-gray-800 rounded-lg p-6">
+                                <p>
+                                    Click on right button to chat with us.
+                                </p>
                             </div>
                         </div>
                     </div>
