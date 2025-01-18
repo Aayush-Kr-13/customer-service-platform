@@ -7,7 +7,7 @@ function NotFound() {
   return (
     <>
         <div>404 Page Not Found</div>
-        <button onClick={()=> navigate('/')}>Login</button>
+        <button onClick={()=> navigate('/')}>Home</button>
     </>
   )
 }
