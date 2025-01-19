@@ -6,6 +6,10 @@ import Dashboard from './Dashboard';
 import { useState } from 'react';
 import RefrshHandler from './RefreshHandler';
 import NotFound from './NotFound';
+import GeneralQ from './generalQ'
+import ProductF from './productF'
+import ProductP from './productP'
+import FeatureI from './featureI'
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -24,9 +28,13 @@ function App() {
 				<Route path="/login" element={<GoogleWrapper />} />
 				<Route path="/" element={<Navigate to="/login" />} />
 				<Route path='/dashboard' element={<PrivateRoute element={<Dashboard/>}/>}/>
+				<Route path='/service-request/general-queries' element={<PrivateRoute element={<GeneralQ/>}/>}/>
+				<Route path='/service-request/product-features' element={<PrivateRoute element={<ProductF/>}/>}/>
+				<Route path='/service-request/product-pricing' element={<PrivateRoute element={<ProductP/>}/>}/>
+				<Route path='/service-request/feature-implementation' element={<PrivateRoute element={<FeatureI/>}/>}/>
 				<Route path="*" element={<NotFound/>} />
 			</Routes>
-	</BrowserRouter>
+		</BrowserRouter>
 	);
 }
 
